@@ -9,12 +9,12 @@ public abstract class Map : MonoBehaviour
     protected List<GameObject> _objs;
 
     protected abstract void Start();
+
+    public Character Player
+    {
+        get { return _chr; }
+    }
+    public Floor Floor { get { return _flr; } }
 }
 
-public class Map1 : Map
-{
-    protected override void Start()
-    {
-        _flr = gameObject.AddComponent<Floor>();
-    }
-}
+

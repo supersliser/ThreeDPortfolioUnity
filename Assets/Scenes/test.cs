@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    Floor ground;
-    Character player;
+    Map map;
     // Start is called before the first frame update
     void Start()
-    {
-        ground = new Floor(new Vector3(100, 10, 10), Color.white);
-        player = gameObject.AddComponent<Character>();
+        {
+        map = gameObject.AddComponent<Map1>();
     }
 
     // Update is called once per frame
@@ -18,7 +16,7 @@ public class test : MonoBehaviour
     {
         if (Input.GetMouseButton(0)) // Check for left mouse click
         {
-            Ray ray = player.Camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = map.Player.Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit)) // Cast a ray from camera to mouse position
@@ -27,7 +25,7 @@ public class test : MonoBehaviour
                 Vector3 clickLocation = hit.point;
 
                 // Do something with the click location (e.g., print it)
-                player.StartMove(new Vector2(clickLocation.x, clickLocation.z));
+                map.Player.StartMove(new Vector2(clickLocation.x, clickLocation.z));
             }
         }
     }
