@@ -4,18 +4,17 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Floor : MonoBehaviour
+public abstract class Floor : MonoBehaviour
 {
     protected Vector3 _size;
     protected GameObject _item;
     protected Material _mat;
 
-    public Floor(Vector3 size, Color color)
+    protected void Start()
     {
         _item = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Size = size;
+        Size = Vector3.zero;
         _mat = _item.GetComponent<Renderer>().material;
-        _mat.color = color;
     }
     public GameObject Object { get { return _item; } }
     public Vector3 Size
@@ -27,5 +26,16 @@ public class Floor : MonoBehaviour
             _item.transform.position = new Vector3(0, -(value.y / 2), 0);
         }
         get { return _size; }
+    }
+    public Color Colour
+    {
+        set
+        {
+            _mat.color = value;
+        }
+        get
+        {
+            return _mat.color;
+        }
     }
 }
