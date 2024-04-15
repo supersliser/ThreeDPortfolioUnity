@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
         set
         {
             _dir = value * -1;
-            _obj.transform.rotation = Quaternion.AngleAxis((float)value, Vector3.down);
+            _obj.transform.localRotation = Quaternion.AngleAxis((float)value, Vector3.down);
         }
         get
         {
@@ -63,16 +63,14 @@ public class Character : MonoBehaviour
         StopAllCoroutines();
         Direction = Math.Atan2(target.y - Position.z, target.x - Position.x) * (180 / Math.PI);
         //Direction = 0;
-        StartCoroutine(Move(target, 0.005f, new Vector2(Position.x, Position.z)));
+        StartCoroutine(Move(new Vector3(target.x, 0, target.y), 10f));
     }
 
-    protected IEnumerator Move(Vector2 target, float speed, Vector2 start)
+    protected IEnumerator Move(Vector3 target, float speed)
     {
-        //double dist = Math.Sqrt(Math.Pow(target.x - Position.x, 2) + Math.Pow(target.y - Position.z, 2));
-        Vector2 dist = new Vector2(target.x - start.x, target.y - start.y);
-        for (Vector2 i = new Vector2(0, 0); i != new Vector2(target.x - Position.x, target.y - Position.y); i.x += dist.normalized.x * speed, i.y += dist.normalized.y * speed)
+        while (Position != target)
         {
-            Position = new Vector3((float)(start.x + i.x), 0f, (float)(start.y + i.y));
+            Position = Vector3.MoveTowards(Position, target, speed * Time.deltaTime);
             yield return null;
         }
     }
