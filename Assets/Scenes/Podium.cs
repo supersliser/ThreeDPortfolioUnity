@@ -14,9 +14,9 @@ public class Podium : MonoBehaviour
         switch (item)
         {
             case 1:
-                return AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/Podium.prefab");
+                return Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/Podium.prefab"));
             default:
-                return AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/Podium.prefab");
+                return Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/Podium.prefab"));
         }
     }
 
@@ -68,7 +68,22 @@ public class Podium : MonoBehaviour
             _pos = value;
             _flr.transform.localPosition = new Vector3(value.x, value.y - _flr.transform.localScale.y / 2, value.z);
             _pdm.transform.localPosition = new Vector3(value.x, 0, value.z);
+            if (value.x < 0)
+            {
+                _pdm.transform.Rotate(Vector3.up, 90);
+            } else if (value.x > 0)
+            {
+                _pdm.transform.Rotate(Vector3.up, -90);
+            }
         }
         get { return _pos; }
+    }
+
+    public Vector3 Size
+    {
+        get
+        {
+            return _flr.transform.localScale;
+        }
     }
 }

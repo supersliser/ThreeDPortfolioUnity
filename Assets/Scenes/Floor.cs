@@ -40,6 +40,7 @@ public class Floor : MonoBehaviour
             float height = Random.Range(0, 100);
             temp.transform.position = new Vector3(Random.Range(-Size.x / 2, Size.x / 2), (-Size.y / 2) - (height / 2), i);
             temp.transform.localScale = new Vector3(Random.Range(0.5f, 2f), height, Random.Range(0.5f, 2f));
+            temp.transform.parent = _item.transform;
             _prtcs.Add(temp);
         }
     }

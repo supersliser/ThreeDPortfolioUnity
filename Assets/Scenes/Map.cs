@@ -6,7 +6,7 @@ public abstract class Map : MonoBehaviour
 {
     protected Floor _flr;
     protected Character _chr;
-    protected List<GameObject> _objs;
+    protected List<Podium> _pdms;
 
     protected abstract void Start();
 
