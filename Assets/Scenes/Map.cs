@@ -15,6 +15,17 @@ public abstract class Map : MonoBehaviour
         get { return _chr; }
     }
     public Floor Floor { get { return _flr; } }
+
+    public void Update()
+    {
+        foreach (var pdm in _pdms)
+        {
+            if (pdm.checkCharacterInRange(_chr))
+            {
+                
+            }
+        }
+    }
 }
 
 

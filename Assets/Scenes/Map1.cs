@@ -42,6 +42,7 @@ public class Map1 : Map
             var temp = gameObject.AddComponent<Podium>();
             temp.Floor = Podium.getDefaultPodiumFloor(1, _flr);
             temp.PodiumObject = Podium.getDefaultPodium(1);
+            temp.EText = Podium.getDefaultPressEText(1);
             temp.Position = new Vector3((_flr.Size.x / 2) + (temp.Size.x / 2), 0, 20);
             _pdms.Add(temp);
         }
