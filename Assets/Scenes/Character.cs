@@ -13,7 +13,9 @@ public class Character : MonoBehaviour
     protected static GameObject _obj;
     protected static Material _mat;
     protected static Camera _cam;
+    protected Quaternion _camOriginalRot;
     protected static double _dir;
+    protected bool _mov;
 
     private void Start()
     {
@@ -25,6 +27,25 @@ public class Character : MonoBehaviour
         _cam.transform.position = new Vector3(8, 10, -8);
         _cam.transform.Rotate(new Vector3(45, -45, 0));
         Position = new Vector3(0, 0, 0);
+        _mov = true;
+    }
+
+    public void StartResetCamera()
+    {
+        StopAllCoroutines();
+        var temp = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        temp.eulerAngles = new Vector3(45, -45, 0);
+        StartCoroutine(MoveCam(_cam, new Vector3(Position.x + 8, Position.y + 10, Position.z - 8), temp, 10f));
+    }
+
+    protected IEnumerator MoveCam(Camera cam, Vector3 targetPos, Quaternion targetAngle, float speed)
+    {
+        while (cam.transform.position != targetPos || cam.transform.rotation != targetAngle)
+        {
+            cam.transform.position = Vector3.MoveTowards(cam.transform.position, targetPos, speed * Time.deltaTime);
+            cam.transform.rotation = Quaternion.RotateTowards(cam.transform.rotation, targetAngle, speed * 8 * Time.deltaTime);
+            yield return null;
+        }
     }
 
     public Vector3 Position
@@ -45,6 +66,17 @@ public class Character : MonoBehaviour
         get { return _obj; }
     }
     public Camera Camera { get { return _cam; } }
+    public bool MoveEnabled
+    {
+        set
+        {
+            _mov = value;
+        }
+        get
+        {
+            return _mov;
+        }
+    }
     public double Direction
     {
         set
@@ -60,10 +92,13 @@ public class Character : MonoBehaviour
 
     public void StartMove(Vector2 target)
     {
-        StopAllCoroutines();
-        Direction = Math.Atan2(target.y - Position.z, target.x - Position.x) * (180 / Math.PI);
-        //Direction = 0;
-        StartCoroutine(Move(new Vector3(target.x, 0, target.y), 10f));
+        if (MoveEnabled)
+        {
+            StopAllCoroutines();
+            Direction = Math.Atan2(target.y - Position.z, target.x - Position.x) * (180 / Math.PI);
+            //Direction = 0;
+            StartCoroutine(Move(new Vector3(target.x, 0, target.y), 10f));
+        }
     }
 
     protected IEnumerator Move(Vector3 target, float speed)

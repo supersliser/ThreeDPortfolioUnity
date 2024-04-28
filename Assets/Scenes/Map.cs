@@ -22,7 +22,17 @@ public abstract class Map : MonoBehaviour
         {
             if (pdm.checkCharacterInRange(_chr))
             {
-                
+                if (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == false)
+                {
+                    _chr.MoveEnabled = false;
+                    pdm.Focussed = true;
+                    pdm.moveCamStart(Camera.main);
+                } else if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == true)) 
+                {
+                    _chr.MoveEnabled = true;
+                    pdm.Focussed = false;
+                    _chr.StartResetCamera();
+                }
             }
         }
     }
