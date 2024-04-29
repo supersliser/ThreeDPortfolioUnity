@@ -12,6 +12,7 @@ public class Map1 : Map
     protected List<GameObject> _plls;
     protected override void Start()
     {
+        base.Start();
         _flr = gameObject.AddComponent<Floor>();
         _flr.Object = Floor.defaultObject(1);
         _flr.Size = new Vector3(20, 10, 100);
@@ -43,6 +44,7 @@ public class Map1 : Map
             temp.Floor = Podium.getDefaultPodiumFloor(1, _flr);
             temp.PodiumObject = Podium.getDefaultPodium(1);
             temp.EText = Podium.getDefaultPressEText(1);
+            temp.Title = Podium.getTitle(PodiumTypes.Websites, 1);
             temp.Position = new Vector3((_flr.Size.x / 2) + (temp.Size.x / 2), 0, 20);
             _pdms.Add(temp);
         }

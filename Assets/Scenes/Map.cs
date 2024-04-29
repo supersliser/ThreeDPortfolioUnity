@@ -7,8 +7,12 @@ public abstract class Map : MonoBehaviour
     protected Floor _flr;
     protected Character _chr;
     protected List<Podium> _pdms;
+    protected CamData _camD;
 
-    protected abstract void Start();
+    protected virtual void Start()
+    {
+        _camD = Camera.main.GetComponent<CamData>();
+    }
 
     public Character Player
     {
@@ -26,12 +30,12 @@ public abstract class Map : MonoBehaviour
                 {
                     _chr.MoveEnabled = false;
                     pdm.Focussed = true;
-                    pdm.moveCamStart(Camera.main);
+                    _camD.moveCamToPodium(pdm);
                 } else if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == true)) 
                 {
                     _chr.MoveEnabled = true;
                     pdm.Focussed = false;
-                    _chr.StartResetCamera();
+                    _camD.StartResetCamera(_chr);
                 }
             }
         }

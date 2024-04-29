@@ -30,23 +30,7 @@ public class Character : MonoBehaviour
         _mov = true;
     }
 
-    public void StartResetCamera()
-    {
-        StopAllCoroutines();
-        var temp = Quaternion.LookRotation(Vector3.forward, Vector3.up);
-        temp.eulerAngles = new Vector3(45, -45, 0);
-        StartCoroutine(MoveCam(_cam, new Vector3(Position.x + 8, Position.y + 10, Position.z - 8), temp, 10f));
-    }
 
-    protected IEnumerator MoveCam(Camera cam, Vector3 targetPos, Quaternion targetAngle, float speed)
-    {
-        while (cam.transform.position != targetPos || cam.transform.rotation != targetAngle)
-        {
-            cam.transform.position = Vector3.MoveTowards(cam.transform.position, targetPos, speed * Time.deltaTime);
-            cam.transform.rotation = Quaternion.RotateTowards(cam.transform.rotation, targetAngle, speed * 8 * Time.deltaTime);
-            yield return null;
-        }
-    }
 
     public Vector3 Position
     {

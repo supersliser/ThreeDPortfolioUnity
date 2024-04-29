@@ -5,6 +5,14 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+
+public enum PodiumTypes
+{
+    Websites,
+    ThreeDModels,
+    DesktopApps,
+    MobileApps,
+}
 public class Podium : MonoBehaviour
 {
     GameObject _flr;
@@ -14,6 +22,7 @@ public class Podium : MonoBehaviour
     Vector3 _camPos;
     Quaternion _camRot;
     bool _foc;
+    GameObject _tit;
 
     public static GameObject getDefaultPodium(int item)
     {
@@ -24,6 +33,34 @@ public class Podium : MonoBehaviour
             default:
                 return Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/Podium.prefab"));
         }
+    }
+
+    public static GameObject getTitle(PodiumTypes title, int item)
+    {
+        GameObject output;
+        switch (title)
+        {
+            case PodiumTypes.Websites:
+                {
+                    output = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/WebsitesText.prefab"));
+                    break;
+                }
+            default:
+                {
+                    output = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/WebsitesText.prefab"));
+                    break;
+                }
+        }
+        switch (item)
+        {
+            case 1:
+                output.transform.GetChild(0).transform.GetChild(1).GetComponent<Renderer>().material.color = Color.blue;
+                break;
+            default:
+                output.transform.GetChild(0).transform.GetChild(1).GetComponent<Renderer>().material.color = Color.blue;
+                break;
+        }
+        return output;
     }
 
     public static GameObject getDefaultPressEText(int item)
@@ -69,21 +106,7 @@ public class Podium : MonoBehaviour
         return Position.x - (Size.x / 2) < c.Position.x && c.Position.x < Position.x + (Size.x / 2) && Position.y - (Size.y / 2) < c.Position.y && c.Position.y < Position.y + (Size.y / 2);
     }
 
-    public void moveCamStart(Camera c)
-    {
-        StopAllCoroutines();
-        StartCoroutine(MoveCam(c, _camPos, _camRot, 10f));
-    }
 
-    protected IEnumerator MoveCam(Camera cam, Vector3 targetPos, Quaternion targetAngle, float speed)
-    {
-        while (cam.transform.position != targetPos || cam.transform.rotation != targetAngle)
-        {
-            cam.transform.position = Vector3.MoveTowards(cam.transform.position, targetPos, speed * Time.deltaTime);
-            cam.transform.rotation = Quaternion.RotateTowards(cam.transform.rotation, targetAngle, speed * 8 * Time.deltaTime);
-            yield return null;
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -120,9 +143,11 @@ public class Podium : MonoBehaviour
             _flr.transform.localPosition = new Vector3(value.x, value.y - _flr.transform.localScale.y / 2, value.z);
             _pdm.transform.localPosition = new Vector3(value.x, 0, value.z);
             _etxt.transform.localPosition = new Vector3(value.x < 0 ? value.x + 5 : value.x - 5, 0, value.z);
+            _tit.transform.localPosition = new Vector3(value.x < 0 ? value.x + 3 : value.x - 3, 0, value.z);
             _camPos = new Vector3(value.x < 0 ? value.x + 10 : value.x - 5, 5, value.z);
             _camRot = Quaternion.LookRotation(value.x < 0 ? Vector3.left : Vector3.right, Vector3.up);
             _etxt.transform.Rotate(Vector3.up, value.x < 0 ? 90 : -90);
+            _tit.transform.Rotate(Vector3.up, value.x < 0 ? 90 : -90);
             if (value.x < 0)
             {
                 _pdm.transform.Rotate(Vector3.up, 90);
@@ -132,6 +157,14 @@ public class Podium : MonoBehaviour
             }
         }
         get { return _pos; }
+    }
+    public Vector3 CameraPosition
+    {
+        get { return _camPos; }
+    }
+    public Quaternion CameraRotation
+    {
+        get { return _camRot; }
     }
     public bool Focussed
     {
@@ -147,5 +180,10 @@ public class Podium : MonoBehaviour
         {
             return _flr.transform.localScale;
         }
+    }
+    public GameObject Title
+    {
+        set { _tit = value; }
+        get { return _tit; }
     }
 }
