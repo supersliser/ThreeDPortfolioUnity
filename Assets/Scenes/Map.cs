@@ -31,12 +31,15 @@ public abstract class Map : MonoBehaviour
                     pdm.ETextRaised = true;
                     pdm.startMoveEText(1);
                 }
+
+
                 if (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == false)
                 {
                     _chr.MoveEnabled = false;
                     pdm.Focussed = true;
                     _camD.moveCamToPodium(pdm);
-                } else if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == true)) 
+                } 
+                else if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == true)) 
                 {
                     _chr.MoveEnabled = true;
                     pdm.Focussed = false;

@@ -46,6 +46,8 @@ public class Map1 : Map
             temp.EText = Podium.getDefaultPressEText(1);
             temp.Title = Podium.getTitle(PodiumTypes.Websites, 1);
             temp.Position = new Vector3((_flr.Size.x / 2) + (temp.Size.x / 2), 0, 20);
+            temp.NextButton = temp.PodiumObject.transform.GetChild(1).GetChild(1).gameObject;
+            temp.PrevButton = temp.PodiumObject.transform.GetChild(2).GetChild(1).gameObject;
             _pdms.Add(temp);
         }
         

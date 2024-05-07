@@ -24,6 +24,8 @@ public class Podium : MonoBehaviour
     bool _foc;
     GameObject _tit;
     bool _etxtrsd;
+    GameObject _nextBtn;
+    GameObject _prevBtn;
 
     public static GameObject getDefaultPodium(int item)
     {
@@ -123,7 +125,7 @@ public class Podium : MonoBehaviour
 
     protected IEnumerator MoveETextUp()
     {
-        for (float i = -1; i < 0.1f; i += 0.1f)
+        for (float i = -1; i < 0.5f; i += 0.1f)
         {
             _etxt.transform.position = new Vector3(_etxt.transform.position.x, i, _etxt.transform.position.z);
             yield return null;
@@ -132,7 +134,7 @@ public class Podium : MonoBehaviour
 
     protected IEnumerator MoveETextDown()
     {
-        for (float i = 0.1f; i > -1; i -= 0.1f)
+        for (float i = 0.5f; i > -1; i -= 0.1f)
         {
             _etxt.transform.position = new Vector3(_etxt.transform.position.x, i, _etxt.transform.position.z);
             yield return null;
@@ -186,7 +188,7 @@ public class Podium : MonoBehaviour
             _pdm.transform.localPosition = new Vector3(value.x, 0, value.z);
             _etxt.transform.localPosition = new Vector3(value.x < 0 ? value.x + 5 : value.x - 5, -1, value.z);
             _tit.transform.localPosition = new Vector3(value.x < 0 ? value.x + 3 : value.x - 3, 0, value.z);
-            _camPos = new Vector3(value.x < 0 ? value.x + 10 : value.x - 5, 5, value.z);
+            _camPos = new Vector3(value.x < 0 ? value.x + 2 : value.x - 2, 5, value.z);
             _camRot = Quaternion.LookRotation(value.x < 0 ? Vector3.left : Vector3.right, Vector3.up);
             _etxt.transform.Rotate(Vector3.up, value.x < 0 ? 90 : -90);
             _tit.transform.Rotate(Vector3.up, value.x < 0 ? 90 : -90);
@@ -214,6 +216,8 @@ public class Podium : MonoBehaviour
         set
         {
             _foc = value;
+            _nextBtn.GetComponent<ButtonHoverOutline>().enabled = value;
+            _prevBtn.GetComponent<ButtonHoverOutline>().enabled = value;
         }
         get { return _foc; }
     }
@@ -228,5 +232,27 @@ public class Podium : MonoBehaviour
     {
         set { _tit = value; }
         get { return _tit; }
+    }
+    public GameObject NextButton
+    {
+        set
+        {
+            _nextBtn = value;
+        }
+        get
+        {
+            return _nextBtn;
+        }
+    }
+    public GameObject PrevButton
+    {
+        set
+        {
+            _prevBtn = value;
+        }
+        get
+        {
+            return _prevBtn;
+        }
     }
 }

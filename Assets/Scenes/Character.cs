@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     {
         _obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
         _obj.transform.localScale = new Vector3(2, 1, 1);
+        _obj.name = "Character";
         _mat = _obj.GetComponent<Renderer>().material;
         _mat.color = UnityEngine.Color.yellow;
         _cam = Camera.allCameras.First();
