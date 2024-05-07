@@ -8,8 +8,8 @@ public class WebsitePortfolioItem : MonoBehaviour
     private string link;
     private Image image;
     private string name;
-    private GameObject tile;
-   
+    private Image logo;
+
     public void Generate()
     {
 
