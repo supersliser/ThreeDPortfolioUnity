@@ -26,6 +26,11 @@ public abstract class Map : MonoBehaviour
         {
             if (pdm.checkCharacterInRange(_chr))
             {
+                if (!pdm.ETextRaised)
+                {
+                    pdm.ETextRaised = true;
+                    pdm.startMoveEText(1);
+                }
                 if (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == false)
                 {
                     _chr.MoveEnabled = false;
@@ -36,6 +41,13 @@ public abstract class Map : MonoBehaviour
                     _chr.MoveEnabled = true;
                     pdm.Focussed = false;
                     _camD.StartResetCamera(_chr);
+                }
+            } else
+            {
+                if (pdm.ETextRaised)
+                {
+                    pdm.ETextRaised = false;
+                    pdm.startMoveEText(-1);
                 }
             }
         }

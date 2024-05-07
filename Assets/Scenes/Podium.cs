@@ -23,6 +23,7 @@ public class Podium : MonoBehaviour
     Quaternion _camRot;
     bool _foc;
     GameObject _tit;
+    bool _etxtrsd;
 
     public static GameObject getDefaultPodium(int item)
     {
@@ -106,7 +107,37 @@ public class Podium : MonoBehaviour
         return Position.x - (Size.x / 2) < c.Position.x && c.Position.x < Position.x + (Size.x / 2) && Position.y - (Size.y / 2) < c.Position.y && c.Position.y < Position.y + (Size.y / 2);
     }
 
+    public void startMoveEText(int multiplier)
+    {
+        if (multiplier > 0)
+        {
+            StopCoroutine(MoveETextDown());
+            StartCoroutine(MoveETextUp());
+        }
+        else
+        {
+            StopCoroutine(MoveETextUp());
+            StartCoroutine(MoveETextDown());
+        }
+    }
 
+    protected IEnumerator MoveETextUp()
+    {
+        for (float i = -1; i < 0.1f; i += 0.1f)
+        {
+            _etxt.transform.position = new Vector3(_etxt.transform.position.x, i, _etxt.transform.position.z);
+            yield return null;
+        }
+    }
+
+    protected IEnumerator MoveETextDown()
+    {
+        for (float i = 0.1f; i > -1; i -= 0.1f)
+        {
+            _etxt.transform.position = new Vector3(_etxt.transform.position.x, i, _etxt.transform.position.z);
+            yield return null;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -134,7 +165,18 @@ public class Podium : MonoBehaviour
     {
         set { _etxt = value; }
         get { return _etxt; }
-    }    
+    }
+    public bool ETextRaised
+    {
+        set
+        {
+            _etxtrsd = value;
+        }
+        get
+        {
+            return _etxtrsd;
+        }
+    }
     public Vector3 Position
     {
         set
@@ -142,7 +184,7 @@ public class Podium : MonoBehaviour
             _pos = value;
             _flr.transform.localPosition = new Vector3(value.x, value.y - _flr.transform.localScale.y / 2, value.z);
             _pdm.transform.localPosition = new Vector3(value.x, 0, value.z);
-            _etxt.transform.localPosition = new Vector3(value.x < 0 ? value.x + 5 : value.x - 5, 0, value.z);
+            _etxt.transform.localPosition = new Vector3(value.x < 0 ? value.x + 5 : value.x - 5, -1, value.z);
             _tit.transform.localPosition = new Vector3(value.x < 0 ? value.x + 3 : value.x - 3, 0, value.z);
             _camPos = new Vector3(value.x < 0 ? value.x + 10 : value.x - 5, 5, value.z);
             _camRot = Quaternion.LookRotation(value.x < 0 ? Vector3.left : Vector3.right, Vector3.up);
@@ -151,7 +193,8 @@ public class Podium : MonoBehaviour
             if (value.x < 0)
             {
                 _pdm.transform.Rotate(Vector3.up, 90);
-            } else if (value.x > 0)
+            }
+            else if (value.x > 0)
             {
                 _pdm.transform.Rotate(Vector3.up, -90);
             }
