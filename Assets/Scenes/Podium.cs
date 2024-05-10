@@ -27,7 +27,7 @@ public class Podium : MonoBehaviour
     bool _etxtrsd;
     GameObject _nextBtn;
     GameObject _prevBtn;
-    List<MonoBehaviour> _prtfItms;
+    PortfolioItemCarousel _prtfItms;
 
     public static GameObject getDefaultPodium(int item)
     {
@@ -66,6 +66,16 @@ public class Podium : MonoBehaviour
                 break;
         }
         return output;
+    }
+
+    protected void nextClicked()
+    {
+        _prtfItms.startRotateLeft();
+    }
+
+    protected void prevClicked()
+    {
+        _prtfItms.startRotateRight();
     }
 
     public static GameObject getDefaultPressEText(int item)
@@ -127,7 +137,7 @@ public class Podium : MonoBehaviour
 
     public void LoadPortfolioItems(PodiumTypes type)
     {
-        _prtfItms = new List<MonoBehaviour>();
+        _prtfItms = _pdm.AddComponent<PortfolioItemCarousel>();
         switch (type)
         {
             case PodiumTypes.Websites:
@@ -138,8 +148,8 @@ public class Podium : MonoBehaviour
                         var temp = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/WebsitesData/WebsitePortfolioItem.prefab"));
                         temp.transform.position = new Vector3(Position.x < 0 ? Position.x - 15 : Position.x + 15, 8, Position.z);
                         temp.transform.Rotate(Vector3.up, 90);
-                        _prtfItms.Add(temp.GetComponent<WebsitePortfolioItem>());
-                        ((WebsitePortfolioItem)_prtfItms[i]).Generate(i);
+                        _prtfItms.addItem(temp);
+                        temp.GetComponent<WebsitePortfolioItem>().Generate(i);
                     }
                     break;
                 }
@@ -163,18 +173,6 @@ public class Podium : MonoBehaviour
             _etxt.transform.position = new Vector3(_etxt.transform.position.x, i, _etxt.transform.position.z);
             yield return null;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public GameObject Floor
@@ -262,6 +260,7 @@ public class Podium : MonoBehaviour
         set
         {
             _nextBtn = value;
+            _nextBtn.GetComponent<ButtonClicked>().clicked = nextClicked;
         }
         get
         {
@@ -273,6 +272,7 @@ public class Podium : MonoBehaviour
         set
         {
             _prevBtn = value;
+            _prevBtn.GetComponent<ButtonClicked>().clicked = prevClicked;
         }
         get
         {

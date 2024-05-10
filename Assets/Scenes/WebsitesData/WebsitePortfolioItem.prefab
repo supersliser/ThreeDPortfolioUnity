@@ -253,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb68e6ead5aca144f9cdfa5b9587b43e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
 --- !u!1 &6511705524850230444
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +266,7 @@ GameObject:
   - component: {fileID: 2676238448975217950}
   - component: {fileID: 5204751386365402867}
   - component: {fileID: 8210294291948064821}
+  - component: {fileID: 5751931350841111248}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -373,6 +373,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ceb4c28226e7454da5726f26472c76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5751931350841111248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511705524850230444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &6513608143134117879
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,9 +11,10 @@ public class WebsitePortfolioItem : MonoBehaviour
     private string url;
     private Texture image;
     private Texture logo;
-    public bool active;
 
-    public static int WebsiteCount = 1;
+
+    //REMEMBER TO UPDATE WEBSITE COUNT
+    public static int WebsiteCount = 2;
 
     public void Generate(int item)
     {
@@ -24,6 +25,12 @@ public class WebsitePortfolioItem : MonoBehaviour
                 url = "https://valentines-website-rosy.vercel.app";
                 image = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/ValentinesWebsite/ValentinesWebsiteScreenshot.png");
                 logo = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/ValentinesWebsite/Astro.png");
+                break;
+            case 1:
+                name = "Decision Maker";
+                url = "https://decisionmakerversion3.azurewebsites.net/";
+                image = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/DecisionMaker/DecisionMakerImage.png");
+                logo = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/DecisionMaker/BlazorLogo.png");
                 break;
         }
 
