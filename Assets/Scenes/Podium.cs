@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Json;
 using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -26,6 +27,7 @@ public class Podium : MonoBehaviour
     bool _etxtrsd;
     GameObject _nextBtn;
     GameObject _prevBtn;
+    List<MonoBehaviour> _prtfItms;
 
     public static GameObject getDefaultPodium(int item)
     {
@@ -120,6 +122,28 @@ public class Podium : MonoBehaviour
         {
             StopCoroutine(MoveETextUp());
             StartCoroutine(MoveETextDown());
+        }
+    }
+
+    public void LoadPortfolioItems(PodiumTypes type)
+    {
+        _prtfItms = new List<MonoBehaviour>();
+        switch (type)
+        {
+            case PodiumTypes.Websites:
+                {
+                    int count = WebsitePortfolioItem.WebsiteCount;
+                    for (int i = 0; i < count; i++)
+                    {
+                        var temp = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/WebsitesData/WebsitePortfolioItem.prefab"));
+                        temp.transform.position = new Vector3(Position.x < 0 ? Position.x - 15 : Position.x + 15, 8, Position.z);
+                        temp.transform.Rotate(Vector3.up, 90);
+                        _prtfItms.Add(temp.GetComponent<WebsitePortfolioItem>());
+                        ((WebsitePortfolioItem)_prtfItms[i]).Generate(i);
+                    }
+                    break;
+                }
+            default: break;
         }
     }
 

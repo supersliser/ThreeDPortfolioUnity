@@ -38,6 +38,7 @@ public abstract class Map : MonoBehaviour
                     _chr.MoveEnabled = false;
                     pdm.Focussed = true;
                     _camD.moveCamToPodium(pdm);
+                    pdm.LoadPortfolioItems(PodiumTypes.Websites);
                 } 
                 else if (Input.GetKeyDown(KeyCode.Escape) || (Input.GetKeyDown(KeyCode.E) && pdm.Focussed == true)) 
                 {

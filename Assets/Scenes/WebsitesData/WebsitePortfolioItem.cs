@@ -13,41 +13,26 @@ public class WebsitePortfolioItem : MonoBehaviour
     private Texture logo;
     public bool active;
 
+    public static int WebsiteCount = 1;
+
     public void Generate(int item)
     {
-        var data = JsonUtility.FromJson<WebsitePortfolioItemData[]>(AssetDatabase.LoadAssetAtPath<Object>("Assets/Scenes/WebsitesData/WebsiteData.json").ToString())[item];
-        name = data.Name;
-        url = data.Url;
-        image = AssetDatabase.LoadAssetAtPath<Texture>(data.Image);
-        logo = AssetDatabase.LoadAssetAtPath<Texture>(data.Logo);
-
-        gameObject.transform.Find("TitleObject").GetComponent<Text>().text = name;
-        gameObject.transform.Find("Logo").GetComponent<RawImage>().texture = logo;
-        gameObject.transform.Find("MainImage").GetComponent<RawImage>().texture = image;
-    }
-
-    public void Update()
-    {
-        if (Input.GetMouseButton(0)) // Check for left mouse click
+        switch (item)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    Application.OpenURL(url);
-                }
-            }
+            case 0:
+                name = "Valentines Website";
+                url = "https://valentines-website-rosy.vercel.app";
+                image = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/ValentinesWebsite/ValentinesWebsiteScreenshot.png");
+                logo = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/ValentinesWebsite/Astro.png");
+                break;
         }
-    }
-}
 
-public struct WebsitePortfolioItemData
-{
-    public string Name;
-    public string Image;
-    public string Url;
-    public string Logo;
+        gameObject.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = name;
+        gameObject.transform.GetChild(0).GetChild(3).GetComponent<RawImage>().texture = logo;
+        gameObject.transform.GetChild(0).GetChild(2).GetComponent<RawImage>().texture = image;
+    }
+    private void OnMouseDown()
+    {
+        Application.OpenURL(url);
+    }
 }
