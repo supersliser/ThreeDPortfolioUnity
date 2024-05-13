@@ -19,6 +19,17 @@ public class PortfolioItemCarousel : MonoBehaviour
 
     public void addItem(GameObject item)
     {
+        switch (items.Count)
+        {
+            case 0:
+                item.transform.position = currentItemLocation; break;
+            case 1:
+                item.transform.position = nextItemLocation; break;
+            case 2:
+                item.transform.position = previousItemLocation; break;
+            default: item.transform.position = behindCurrentItemLocation; break;
+        }
+
         items.Add(item);
     }
 
@@ -46,17 +57,17 @@ public class PortfolioItemCarousel : MonoBehaviour
     {
         while (Item.transform.position != currentItemLocation)
         {
-            Item.transform.position = Vector3.MoveTowards(Item.transform.position, currentItemLocation, 5 * Time.deltaTime);
-            NextItem.transform.position = Vector3.MoveTowards(NextItem.transform.position, nextItemLocation, 5 * Time.deltaTime);
-            PreviousItem.transform.position = Vector3.MoveTowards(PreviousItem.transform.position, previousItemLocation, 5 * Time.deltaTime);
+            Item.transform.position = Vector3.MoveTowards(Item.transform.position, currentItemLocation, 8 * Time.deltaTime);
+            NextItem.transform.position = Vector3.MoveTowards(NextItem.transform.position, nextItemLocation, 8 * Time.deltaTime);
+            PreviousItem.transform.position = Vector3.MoveTowards(PreviousItem.transform.position, previousItemLocation, 8 * Time.deltaTime);
             foreach (var i in items)
             {
                 if (i != Item && i != NextItem && i != PreviousItem)
                 {
-                    i.transform.position = Vector3.MoveTowards(i.transform.position, behindCurrentItemLocation, 5 * Time.deltaTime);
+                    i.transform.position = Vector3.MoveTowards(i.transform.position, behindCurrentItemLocation, 8 * Time.deltaTime);
                 }
             }
-            yield return null; 
+            yield return null;
         }
     }
 
@@ -112,11 +123,11 @@ public class PortfolioItemCarousel : MonoBehaviour
     }
     public Vector3 NextLocation
     {
-        get { return nextItemLocation;}
+        get { return nextItemLocation; }
     }
     public Vector3 PrevLocation
     {
-        get { return previousItemLocation;}
+        get { return previousItemLocation; }
     }
     public Vector3 BehindCurrentLocation
     {
@@ -130,9 +141,9 @@ public class PortfolioItemCarousel : MonoBehaviour
             {
                 return items[0];
             }
-            else 
-            { 
-                return items[currentItem + 1]; 
+            else
+            {
+                return items[currentItem + 1];
             }
         }
     }

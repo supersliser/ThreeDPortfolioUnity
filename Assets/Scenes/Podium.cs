@@ -138,6 +138,7 @@ public class Podium : MonoBehaviour
     public void LoadPortfolioItems(PodiumTypes type)
     {
         _prtfItms = _pdm.AddComponent<PortfolioItemCarousel>();
+        _prtfItms.Location = new Vector3(_pos.x < 0 ? _pos.x - 15 : _pos.x + 15, _pos.y + 5, _pos.z);
         switch (type)
         {
             case PodiumTypes.Websites:
@@ -146,7 +147,6 @@ public class Podium : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         var temp = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Scenes/WebsitesData/WebsitePortfolioItem.prefab"));
-                        temp.transform.position = new Vector3(Position.x < 0 ? Position.x - 15 : Position.x + 15, 8, Position.z);
                         temp.transform.Rotate(Vector3.up, 90);
                         _prtfItms.addItem(temp);
                         temp.GetComponent<WebsitePortfolioItem>().Generate(i);

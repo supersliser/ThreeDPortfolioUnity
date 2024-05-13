@@ -14,7 +14,7 @@ public class WebsitePortfolioItem : MonoBehaviour
 
 
     //REMEMBER TO UPDATE WEBSITE COUNT
-    public static int WebsiteCount = 2;
+    public static int WebsiteCount = 3;
 
     public void Generate(int item)
     {
@@ -31,6 +31,12 @@ public class WebsitePortfolioItem : MonoBehaviour
                 url = "https://decisionmakerversion3.azurewebsites.net/";
                 image = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/DecisionMaker/DecisionMakerImage.png");
                 logo = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/DecisionMaker/BlazorLogo.png");
+                break;
+            case 2:
+                name = "SweetNSoft Tech";
+                url = "https://sweetnsoftech.com";
+                image = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/Sweetnsofttech/Screenshot 2024-05-14 001923.png");
+                logo = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Scenes/WebsitesData/Sweetnsofttech/newIcon.png");
                 break;
         }
 
